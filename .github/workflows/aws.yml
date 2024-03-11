@@ -45,7 +45,7 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         docker image build -t asel/flaskapp:v1 .
-        docker docker push asel/flaskapp:v1
+        docker push asel/flaskapp:v1
         echo "${{ secrets.DOCKERPW }}" | docker login -u "Asel"  --password-stdin
 
     
