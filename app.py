@@ -5,4 +5,4 @@ app = Flask (__name__)
 
 @app.route("/")
 def counter():
-  return " Hello  from WeMagic Informatica !!!"
+  return " Hello  from WeMagic Informatica !!"
