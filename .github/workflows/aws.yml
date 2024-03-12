@@ -24,7 +24,7 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Python application
+name: Build and Push
 
 on:
   push:
@@ -39,11 +39,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build & Push Image
-      run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
+    - name: Build Image
+      run: | 
         docker image build -t webmagic1/flaskapp:v1 .
         docker push webmagic1/flaskapp:v1
         echo "${{ secrets.DOCKERPW }}" | docker login -u "webmagic1"  --password-stdin
