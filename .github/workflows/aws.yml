@@ -38,15 +38,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Build & Push Image
-      run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        docker image build -t webmagic1/flaskapp:v1 .
-        docker push webmagic1/flaskapp:v1
-        echo "${{ secrets.DOCKERPW }}" | docker login -u "webmagic1"  --password-stdin
-
+    - uses: actions/checkout@v4
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:  
+        aws-region: us-east-1
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Login to amazon ECR
+      uses: aws-actions/amazon-ecr-login@v1
+    - name: Build Image
+      run: docker build -t python-app:v1
+    - name: Tag Image
+      run: docker tag python-app:v1 938336822495.dkr.ecr.us-east-1.amazonaws.com/python-app:v1
+    - name: Push Image
+      run: docker push 938336822495.dkr.ecr.us-east-1.amazonaws.com/python-app:v1
     
    
