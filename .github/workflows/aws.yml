@@ -1,5 +1,3 @@
-
-
 name: Build and Push
 
 on:
@@ -11,7 +9,6 @@ on:
   
 jobs:
   build: 
-
     runs-on: ubuntu-latest
 
     steps:
@@ -35,11 +32,11 @@ jobs:
 
      - name: Tag Image
        run: | 
-         docker tag webmagic1/flaskapp:v1 938336822495.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
+         docker tag webmagic1/flaskapp:v1 938336822495.dkr.ecr.us-east-1.amazonaws.com/python-app:v1
     
      - name: Push Image
        run:  
-          docker push 938336822495.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
+          docker push 938336822495.dkr.ecr.us-east-1.amazonaws.com/python-app:v1
           
 
     
