@@ -1,13 +1,17 @@
-FROM python:2.7-alpine
+# Use the official Nginx base image
+FROM --platform=linux/amd64 nginx:1.25.4
 
-RUN mkdir /app
-WORKDIR /app
+# Remove the default Nginx configuration file
+# RUN rm /etc/nginx/conf.d/default.conf
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# Copy the custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/
 
-COPY . .
-LABEL maintainer="WebMagic Informatica <info@webmagicinformatica.com>" \
-      version="1.0"
+# Copy the static HTML file to the web server's root directory
+COPY index.html /usr/share/nginx/html/
 
-CMD flask run --host=0.0.0.0 --port=5000
+# Expose port 80 to allow incoming connections
+EXPOSE 80
+
+# Start Nginx when the container launches
+CMD ["nginx", "-g", "daemon off;"]
